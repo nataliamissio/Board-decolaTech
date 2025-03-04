@@ -1,0 +1,8 @@
+mar. 03, 2025 10:23:19 PM liquibase.command
+INFO: Logging exception.
+ERROR: Exception Details
+ERROR: Exception Primary Class:  ChangeLogParseException
+ERROR: Exception Primary Reason: databaseChangeLog does not contain a list of entries. Each changeSet must begin ' - changeSet:'
+ERROR: Exception Primary Source: 4.25.1
+mar. 03, 2025 10:23:19 PM liquibase.command
+INFO: Command execution complete
