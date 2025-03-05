@@ -5,7 +5,6 @@
 CREATE TABLE CARDS(
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    `order` int NOT NULL,
     kind VARCHAR(7) NOT NULL,
     board_id BIGINT NOT NULL,
     CONSTRAINT boards__boards_cards_fk FOREIGN KEY (board_id) REFERENCES BOARDS(id) ON DELETE CASCADE,
