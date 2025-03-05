@@ -15,7 +15,7 @@ public class BoardDAO {
 
   private final Connection connection;
 
-  private BoardEntity insert(final BoardEntity entity) throws SQLException {
+  public BoardEntity insert(final BoardEntity entity) throws SQLException {
     var sql = "DELETE FROM BOARDS WHERE id = ?";
     try(var statement = connection.prepareStatement(sql)){
       statement.setString(1, entity.getName());
@@ -36,7 +36,7 @@ public class BoardDAO {
 
   }
 
-  private Optional<BoardEntity> findById(final Long id) throws SQLException {
+  public Optional<BoardEntity> findById(final Long id) throws SQLException {
     var sql = "SELECT 1 FROM BOARDS WHERE id = ?";
     try(var statement = connection.prepareStatement(sql)){
       statement.setLong(1, id);
