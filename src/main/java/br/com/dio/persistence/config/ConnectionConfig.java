@@ -1,6 +1,5 @@
 package br.com.dio.persistence.config;
 
-
 import lombok.NoArgsConstructor;
 
 import java.sql.DriverManager;
@@ -16,10 +15,8 @@ public final class ConnectionConfig {
         var url = "jdbc:mysql://localhost:3306/board";
         var user = "root";
         var password = "Natalia123@";
-        var connection = DriverManager.getConnection(url,user,password);
+        var connection = DriverManager.getConnection(url, user, password);
         connection.setAutoCommit(false);
         return connection;
-
     }
-
 }

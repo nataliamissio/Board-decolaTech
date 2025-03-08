@@ -1,15 +1,15 @@
 --liquibase formatted sql
 --changeset natalia:202503
---comment: boards_collumns table create
+--comment: blocks table create
 
-CREATE TABLE BOARDS_COLLMNS(
+CREATE TABLE BLOCKS(
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    `order` int NOT NULL,
-    kind VARCHAR(7) NOT NULL,
-    board_id BIGINT NOT NULL,
-    CONSTRAINT boards__boards_collumns_fk FOREIGN KEY (board_id) REFERENCES BOARDS(id) ON DELETE CASCADE,
-    CONSTRAINT id_order_uk UNIQUE KEY unique_board_id_order (board_id, `order`)
+    blocked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    block_reason VARCHAR(255) NOT NULL,
+    unblocked_at TIMESTAMP NULL,
+    unblock_reason VARCHAR(255) NOT NULL,
+    card_id BIGINT NoT NULL,
+    CONSTRAINT cards_blocks_fk FOREIGN KEY (card_id) REFERENCES CARDS(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
---roolback DROP TABLE BOARDS_COLLMNS
+--roolback DROP TABLE BLOCKS

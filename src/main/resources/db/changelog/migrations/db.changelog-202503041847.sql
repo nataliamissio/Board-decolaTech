@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset natalia:202503
+--changeset natalia:202503041847
 --comment: blocks table create
 
 CREATE TABLE BLOCKS(
@@ -8,8 +8,8 @@ CREATE TABLE BLOCKS(
     block_reason VARCHAR(255) NOT NULL,
     unblocked_at TIMESTAMP NULL,
     unblock_reason VARCHAR(255) NOT NULL,
-    card_id BIGINT NoT NULL,
-    CONSTRAINT cards_blocks_fk FOREIGN KEY (card_id) REFERENCES CARDS(id) ON DELETE CASCADE
+    card_id BIGINT NOT NULL,
+    CONSTRAINT cards__blocks_fk FOREIGN KEY (card_id) REFERENCES CARDS(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 --roolback DROP TABLE BLOCKS

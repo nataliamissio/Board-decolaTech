@@ -15,11 +15,11 @@ import static br.com.dio.persistence.config.ConnectionConfig.getConnection;
 import static br.com.dio.persistence.entity.BoardColumnKindEnum.CANCEL;
 import static br.com.dio.persistence.entity.BoardColumnKindEnum.FINAL;
 import static br.com.dio.persistence.entity.BoardColumnKindEnum.INITIAL;
-import static br.com.dio.persistence.entity.BoardColumnKindEnum.PEDING;
+import static br.com.dio.persistence.entity.BoardColumnKindEnum.PENDING;
 
 public class MainMenu {
 
-  private final Scanner scanner = new Scanner(System.in);
+  private final Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
   public void execute() throws SQLException {
     System.out.println("Bem vindo ao gerenciador de boards, escolha a opção desejada");
@@ -35,7 +35,7 @@ public class MainMenu {
         case 2 -> selectBoard();
         case 3 -> deleteBoard();
         case 4 -> System.exit(0);
-        default -> System.out.println("Opção inválida, informe uma opção no menu");
+        default -> System.out.println("Opção inválida, informe uma opção do menu");
       }
     }
   }
@@ -56,20 +56,20 @@ public class MainMenu {
     columns.add(initialColumn);
 
     for (int i = 0; i < additionalColumns; i++) {
-      System.out.println("Informe o nome da coluna de tarefa pendente");
+      System.out.println("Informe o nome da coluna de tarefa pendente do board");
       var pendingColumnName = scanner.next();
-      var pendingColumn = createColumn(pendingColumnName, PEDING, i + 1);
+      var pendingColumn = createColumn(pendingColumnName, PENDING, i + 1);
       columns.add(pendingColumn);
     }
 
-    System.out.println("Informe o nome da coluna final do board");
+    System.out.println("Informe o nome da coluna final");
     var finalColumnName = scanner.next();
     var finalColumn = createColumn(finalColumnName, FINAL, additionalColumns + 1);
     columns.add(finalColumn);
 
-    System.out.println("Informe o nome da coluna de cancelamento do board");
+    System.out.println("Informe o nome da coluna de cancelamento do baord");
     var cancelColumnName = scanner.next();
-    var cancelColumn = createColumn(cancelColumnName, CANCEL, additionalColumns + 1);
+    var cancelColumn = createColumn(cancelColumnName, CANCEL, additionalColumns + 2);
     columns.add(cancelColumn);
 
     entity.setBoardColumns(columns);
@@ -77,6 +77,7 @@ public class MainMenu {
       var service = new BoardService(connection);
       service.insert(entity);
     }
+
   }
 
   private void selectBoard() throws SQLException {
@@ -85,19 +86,19 @@ public class MainMenu {
     try (var connection = getConnection()) {
       var queryService = new BoardQueryService(connection);
       var optional = queryService.findById(id);
-      optional.ifPresentOrElse(b -> new BoardMenu(optional.get()).execute(),
+      optional.ifPresentOrElse(
+          b -> new BoardMenu(b).execute(),
           () -> System.out.printf("Não foi encontrado um board com id %s\n", id));
     }
   }
 
   private void deleteBoard() throws SQLException {
-    System.out.println("Informe o id do boar que será excluído");
+    System.out.println("Informe o id do board que será excluido");
     var id = scanner.nextLong();
-
     try (var connection = getConnection()) {
       var service = new BoardService(connection);
       if (service.delete(id)) {
-        System.out.printf("O board %s foi excluído\n", id);
+        System.out.printf("O board %s foi excluido\n", id);
       } else {
         System.out.printf("Não foi encontrado um board com id %s\n", id);
       }

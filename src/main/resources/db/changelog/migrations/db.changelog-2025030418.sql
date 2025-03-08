@@ -1,14 +1,13 @@
 --liquibase formatted sql
---changeset natalia:202503
+--changeset natalia:2025030418
 --comment: cards table create
 
 CREATE TABLE CARDS(
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    kind VARCHAR(7) NOT NULL,
-    board_id BIGINT NOT NULL,
-    CONSTRAINT boards__boards_cards_fk FOREIGN KEY (board_id) REFERENCES BOARDS(id) ON DELETE CASCADE,
-    CONSTRAINT id_order_uk UNIQUE KEY unique_board_id_order (board_id, `order`)
+    title VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    board_column_id BIGINT NOT NULL,
+    CONSTRAINT boards_columns__cards_fk FOREIGN KEY (board_column_id) REFERENCES BOARDS_COLUMNS(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 --roolback DROP TABLE CARDS

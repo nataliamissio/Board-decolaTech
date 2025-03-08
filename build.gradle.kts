@@ -43,7 +43,6 @@ java {
     }
 }
 
-application {
-    // Define the main class for the application.
-    mainClass = "org.example.App"
-}
+ application {
+     mainClass = "br.com.dio.Main"
+ }

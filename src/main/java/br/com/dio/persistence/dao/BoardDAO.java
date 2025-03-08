@@ -1,6 +1,5 @@
 package br.com.dio.persistence.dao;
 
-import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -13,32 +12,31 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class BoardDAO {
 
-  private final Connection connection;
+  private Connection connection;
 
   public BoardEntity insert(final BoardEntity entity) throws SQLException {
-    var sql = "DELETE FROM BOARDS WHERE id = ?";
-    try(var statement = connection.prepareStatement(sql)){
+    var sql = "INSERT INTO BOARDS (name) values (?);";
+    try (var statement = connection.prepareStatement(sql)) {
       statement.setString(1, entity.getName());
       statement.executeUpdate();
       if (statement instanceof StatementImpl impl) {
-        entity.setId(impl.getLastInsertID());        
+        entity.setId(impl.getLastInsertID());
       }
     }
     return entity;
   }
 
   public void delete(final Long id) throws SQLException {
-    var sql = "DELETE FROM BOARDS WHERE id = ?";
-    try(var statement = connection.prepareStatement(sql)){
+    var sql = "DELETE FROM BOARDS WHERE id = ?;";
+    try (var statement = connection.prepareStatement(sql)) {
       statement.setLong(1, id);
       statement.executeUpdate();
     }
-
   }
 
   public Optional<BoardEntity> findById(final Long id) throws SQLException {
-    var sql = "SELECT 1 FROM BOARDS WHERE id = ?";
-    try(var statement = connection.prepareStatement(sql)){
+    var sql = "SELECT id, name FROM BOARDS WHERE id = ?;";
+    try (var statement = connection.prepareStatement(sql)) {
       statement.setLong(1, id);
       statement.executeQuery();
       var resultSet = statement.getResultSet();
@@ -51,11 +49,10 @@ public class BoardDAO {
       return Optional.empty();
     }
   }
-  
 
   public boolean exists(final Long id) throws SQLException {
-    var sql = "SELECT 1 FROM BOARDS WHERE id = ?";
-    try(var statement = connection.prepareStatement(sql)){
+    var sql = "SELECT 1 FROM BOARDS WHERE id = ?;";
+    try (var statement = connection.prepareStatement(sql)) {
       statement.setLong(1, id);
       statement.executeQuery();
       return statement.getResultSet().next();

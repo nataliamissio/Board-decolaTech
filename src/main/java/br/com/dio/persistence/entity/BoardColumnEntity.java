@@ -1,8 +1,11 @@
 package br.com.dio.persistence.entity;
 
-import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 public class BoardColumnEntity {
@@ -12,5 +15,7 @@ public class BoardColumnEntity {
   private int order;
   private BoardColumnKindEnum kind;
   private BoardEntity board = new BoardEntity();
-
+  @ToString.Exclude
+  @EqualsAndHashCode.Exclude
+  private List<CardEntity> cards = new ArrayList<>();
 }

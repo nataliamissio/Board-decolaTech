@@ -12,5 +12,4 @@ public class BlockEntity {
   private String blockReason;
   private OffsetDateTime unblockedAt;
   private String unblockReason;
-
 }

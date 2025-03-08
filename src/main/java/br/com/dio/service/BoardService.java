@@ -15,15 +15,15 @@ public class BoardService {
 
   public BoardEntity insert(final BoardEntity entity) throws SQLException {
     var dao = new BoardDAO(connection);
-    var boardColumnDao = new BoardColumnDAO(connection);
-    try {
+    var boardColumnDAO = new BoardColumnDAO(connection);
+    try{
       dao.insert(entity);
       var columns = entity.getBoardColumns().stream().map(c -> {
         c.setBoard(entity);
         return c;
       }).toList();
-      for(var column : columns) {
-        boardColumnDao.insert(column);
+      for (var column :  columns){
+        boardColumnDAO.insert(column);
       }
       connection.commit();
     } catch (SQLException e) {
@@ -33,12 +33,11 @@ public class BoardService {
     return entity;
   }
 
-
   public boolean delete(final Long id) throws SQLException {
     var dao = new BoardDAO(connection);
-    try {
+    try{
       if (!dao.exists(id)) {
-        return false;        
+        return false;
       }
       dao.delete(id);
       connection.commit();
